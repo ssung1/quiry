@@ -1,0 +1,15 @@
+This is how we do stylesheet
+
+the stylesheet class name has these parts:
+
+    function_align_border
+
+function may include font and size.  some functions such as "table"
+would not contain font and size.
+
+align is the vertical or horizontal alignment, or the combination of
+both, in the order listed.
+
+border can be "b" or blank for no border.
+
+

@@ -1,0 +1,281 @@
+<html>
+
+<head>
+<title>Servlets the Easy Way</title>
+
+<style>
+.code {
+    width: 100%;
+    background-color: silver;
+    padding-left: 4em;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Servlets the Easy Way</h1>
+
+<p>
+How to do it?  Follow these easy steps:
+</p>
+
+<ol>
+
+<li>
+<p>
+First, you inherit WebIndex, which is a Servlet.  We only use one
+Servlet because we want to reduce the number of entries (unnecessary
+hard work) in our web.xml file:
+</p>
+
+<pre class="code">
+public class WebIndex extends net.codepackages.servlet.WebIndex
+{
+}
+</pre>
+
+<p>
+<i>
+Note: yes, you can use the servlet/&lt;classname&gt; notation to call
+servlets, but that reveals too much information to the user.
+</i>
+</p>
+</li>
+
+<li>
+<p>
+Then, you override the loadService method.  A "service" is the actual
+servlet in our architecture.  The method decides which service to use
+based on the URL.
+</p>
+
+<pre class="code">
+public void loadService( Map req )
+{
+    try{
+        String path_info;
+        path_info = (String)req.get( "_path_info" );
+
+        // path info has this format:
+        //     /path/path/path...
+        // the first path tells us what service to use
+
+        int slash;
+        slash = path_info.indexOf( "/", 1 );
+        
+        String service;
+        if( slash >= 0 ){
+            service = path_info.substring( 1, slash );
+        }
+        else{
+            service = path_info.substring( 1 );
+        }
+        
+        int period;
+        period = service.indexOf( "." );
+        if( period >= 0 ){
+            service = service.substring( 0, period );
+        }
+        
+        String classroot;
+        classroot = getClass().getPackage().getName() + ".Service";
+
+        Class sc;
+        sc = Class.forName( classroot + service );
+        _service = (Service)sc.newInstance();
+    }
+    catch( Exception ex ){
+        _service = new Service();
+    }
+}
+</pre>
+
+<p>
+A clue: the url is composed of
+</p>
+
+<pre>
+_protocol://_server_name/_context_path/_servlet_path/_path_info
+</pre>
+
+<p>
+Depending on how you set up <mono>web.xml</mono>, your
+<mono>_servlet_path</mono> and <mono>_path_info</mono> may vary.  A
+matching pattern of <mono>/*</mono> will turn everything after
+<mono>/</mono> into <mono>_path_info</mono>.  For a pattern of
+<mono>/</mono>, everything becomes <mono>_servlet_path</mono>.
+</p>
+
+</li>
+
+<li>
+<p>
+Now we look at the Service class.  Something you may override is the
+init method.  But ever since the introduction of real-time loading of
+the configuration file, init file usually does not need to be
+overridden:
+</p>
+
+<pre class="code">
+public class Service extends net.codepackages.servlet.Service
+{
+    public void init( PrintWriter out, Map req, Map ses )
+        throws Exception
+    {
+	Resource.init();
+	super.init( out, req, ses );
+    }
+}
+</pre>
+
+<p>
+Remember to call super.init at the end.
+</p>
+</li>
+
+<li>
+<p>
+Next, you may want to override the toURL method to reflect your scheme
+of service selection.  This will need to coordinate with the loadService
+method in WebIndex
+</p>
+
+<pre class="code">
+public String toURL( String service )
+{
+    StringBuffer url = new StringBuffer();
+
+    url.append( _req.get( "_context_path" ) );
+    url.append( _req.get( "_servlet_path" ) );
+    url.append( "/" );
+    url.append( service );
+    url.append( ".html" );
+
+    return url.toString();
+}
+</pre>
+</li>
+
+<li>
+<p>
+Override checkRedirect to redirect pages (for pages that require
+login, for example). To redirect put the page to redirect in the
+session map using the key "_redirect":
+</p>
+
+<pre class="code">
+protected boolean checkRedirect()
+{
+    if( !isLoggedIn() ){
+        pushURL();
+        _ses.put( "_redirect", toURL( "Login.html", null ) );
+        return true;
+    }
+    return super.checkRedirect();
+}
+</pre>
+
+</li>
+
+<li>
+<p>
+Set content type to desired type if it is not text/html.
+</p>
+
+<pre class="code">
+public String contentType()
+{
+    return "text/html";
+}
+</pre>
+</li>
+
+<li>
+<p>
+The get method is the entry point for the service.  By default it calls
+checkRedirect and then getPage.  There is little need to override this
+method.
+</p>
+</li>
+
+<li>
+<p>
+The getPage method prints out the most common layout in html.  If you
+want the output to be in another format, override this:
+<pre class="code">
+public void getPage()
+{
+    String submit = (String)_req.get( "submit" );
+    if( "Download".equals( submit ) ){
+        download();
+    }
+    else{
+        super.getPage();
+    }
+}
+</pre>
+</p>
+</li>
+
+<li>
+<p>
+Then put the header in getHeader method.  Print all information to
+_out.  This is where the title and CSS goes.
+</p>
+
+<pre class="code">
+public void getHeader()
+{
+    _out.println( "&lt;title&gt;Hello&lt;/title&gt;" );
+    _out.println( "&lt;style&gt;" );
+    _out.println( "body {" );
+    _out.println( "    font-family: verdana;" );
+    _out.println( "    font-size: 10pt;" );
+    _out.println( "}" );
+    _out.println( "&lt;/style&gt;" );
+}
+</pre>
+</li>
+
+<li>
+<p>
+Next, put the content in getContent method.  Print all information to
+_out.
+</p>
+
+<pre class="code">
+public void getContent()
+{
+    parseInput();
+    _out.println( "Hello World!" );
+}
+</pre>
+
+<p>
+Method parseInput can be a very useful function.  It tries to fill in
+the defined class members with the request Map.  It will look up the key that
+have the same name as the class member (with leading underscore removed).
+</p>
+
+</li>
+
+<li>
+<p>
+Optionally, put the footer in getFooter method.
+</p>
+
+<pre class="code">
+public void getFooter()
+{
+    _out.println( "Copyright &copy; 2000   Stuff" );
+}
+</pre>
+</li>
+
+</ol>
+
+</body>
+
+</html>

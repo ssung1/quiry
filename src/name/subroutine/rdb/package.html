@@ -1,0 +1,283 @@
+<html>
+
+<head>
+<title>The relational database package.</title>
+</head>
+
+<body>
+
+<p>
+The main components include the Rdb and descendents, the Rtbl and
+descendents, and RdbSession.  Rdb handles SQL generation.  RdbSession
+handles all SQL execution.  Rtbl is an interface that must be
+implemented for Rdb to work.
+</p>
+
+<h3>To Use the Rdb Package</h3>
+
+<ol>
+
+<li>
+<p>
+Create classes for each table you want.  The fields must start with a
+double underscore (__) in order to be saved into the table.  The table
+also must implement the interface Rtbl.  Some of the common methods
+have already been implemented in AbstractRtbl, so in most cases, you
+can just extend that.
+</p>
+
+<p>
+The only variable types supported in the database are integer, char[],
+and float.  Date types will be mapped into integer as yyyyMMdd format.
+This means you can still use Date types as Date types in your objects,
+but they will be stored as integers in the database.
+</p>
+
+<p>
+You'll want fields called __oid, _is_modified, and _is_new, and
+__is_deleted in your class since you'll need to implement their
+accessors and mutators.  See the package name.subroutine.persist if
+you have it.  It contains examples of how to write persistent objects.
+</p>
+
+<p>
+As an option, inherit from name.subroutine.rdb.AbstractRtbl.  It
+contains __oid, _is_new, _is_modified, __is_deleted and a primaryKey
+that returns "oid".
+</p>
+
+<p>
+If you are connecting to a database you have no control over, try
+extending from name.subroutine.rdb.ExternalRtbl.  It contains _is_new
+and _is_modified, but it does not have any extra fields that would be
+created in the table.
+</p>
+
+<p>
+You have to implement three very important methods: primaryKey,
+indexLst, and uniqueIndexLst.
+</p>
+
+<p>
+The method primaryKey returns an array of strings, so you will probably
+do something like:
+<pre>
+    public String[] primaryKey()
+    {
+        return new String[] {
+            "oid"
+        };
+    }
+</pre>
+because your primary key should be the object ID.  Notice that the
+field name does not include the double-underscore prefix.
+</p>
+
+<p>
+The methods indexLst and uniqueIndexLst return an array of string
+arrays, so you will probably do something like:
+<pre>
+    public String[][] indexLst()
+    {
+        return new String[][] {
+            { "field1", "field2", "field3" },
+            { "field1" },
+        };
+    }
+</pre>
+Where fields 1, 2, and 3 form one of your indices, and field 1 forms
+another one of your indices.
+</p>
+
+<p>
+If you do not want to have an index, return this:
+</p>
+<pre>
+    public String[][] indexLst()
+    {
+        return new String[][] {
+        };
+    }
+</pre>
+</li>
+
+<li>
+<p>
+Compile the new class.
+</p>
+</li>
+
+<li>
+<p>
+Run name.subroutine.source.Skeletor on the newly compiled .class
+file.  The Skeletor will create accessors and mutators for you.
+</p>
+</li>
+
+<li>
+<p>
+Copy and paste the accessors and mutators into your original Java
+files since Skeletor omits the existing methods you have put in.
+</p>
+</li>
+
+<li>
+<p>
+You'll want to override method resolve in your Rtbl class.  By
+default, the resolve method in AbstractRtbl does nothing.  This method
+is called by toRtbl whenever a Rtbl object is loaded from database.
+All "simple" fields will be initialized, but if you want object links
+or such, you'll need to put them in this method.
+</p>
+</li>
+
+<li>
+<p>
+Create a database class, extended from Rdb or one of the other
+flavors.  Most of them are alike except for RdbdBASE.
+</p>
+
+<p>
+Initialize the database class with the init method, passing these parameters:
+</p>
+
+<pre>
+    // A list of table names and an example of the Rtbl object.  These
+    // will be used to create tables and fetch field attributes.
+    //
+    // If you put highlowkeys here, it can be used for table checkup,
+    // but you also have to put HighLowKeys in the root_lst or it will
+    // be garbagecollected
+    Object[] rtbl_lst = {
+        // table                        Rtbl object
+
+        "cycle",                        new Cycle(),
+        "filegroup",                    new FileGroup(),
+        "dbfile",                       new DbFile(),
+        "filecall",                     new FileCall(),
+    };
+
+    // This is a list of directly accessible tables.  All tables in this
+    // list will not be acted upon by garbage collection
+    //
+    // Use case-sensitive real table names here.
+    //
+    // Make sure HighLowKeys is also in this list if it is in rtbl_lst.
+    // There is a side effect to adding HighLowKeys: there will be an
+    // entry for highlowkeys table in the HighLowKeys table -- harmless,
+    // but can be avoided (?)
+    String[] root_lst = {
+        "Cycle"
+    };
+
+    // This is a list of the relations between the tables.  The
+    // trainer goes on the left and the pokemon goes on the right.  Be
+    // aware that the relation can be either one-to-many or many-to-one.
+    //
+    // For most "container" relations, the type is one-to-many.
+    // But for most "checkup" relations, it is usually many-to-one.
+    //
+    // Use case-sensitive real table names here.
+    String[] relation_lst = {
+        // table 1     relation       ref field      table 2
+        // 
+        // (the ref field is always the field belonging to the
+        // many side)
+        "DbFile",      "1to*",        "dbfile",      "FileCall",
+        "Cycle",       "1to*",        "cycle",       "FileGroup",
+        "FileGroup",   "1to*",        "file_group",  "DbFile",
+    };
+
+    init( rtbl_lst, root_lst, relation_lst,
+          "DatabaseDriver", "jdbc:url", "user", "password" );
+
+</pre>
+
+</li>
+
+<li>
+<p>
+To run the garbage collector, call
+</p>
+
+<pre>
+    Rdb.markAndSweep();
+    Rdb.relocate( batch_size, batch_count );
+</pre>
+
+<p>
+where batch_size is the number of records to relocate at one time
+(related to memory usage), and batch_count is the number of batches to
+run (use -1 to run until all records have continuous oids).
+</p>
+
+</li>
+
+</ol>
+
+<h3>
+JDBC Driver names
+</h3>
+
+<table border="1" cellspacing="0" cellpadding="1">
+<tr>
+<td>MySQL</td>
+<td>com.mysql.jdbc.Driver</td>
+<td>jdbc:mysql://host/database</td>
+</tr>
+
+<tr>
+<td>Informix</td>
+<td>com.informix.jdbc.IfxDriver</td>
+<td>jdbc:informix-sqli://host:port/database:informixserver=server</td>
+</tr>
+
+<tr>
+<td>InstantDB</td>
+<td>org.enhydra.instantdb.jdbc.idbDriver</td>
+<td>jdbc:idb=path_to_properties_file</td>
+</tr>
+
+<tr>
+<td>Oracle</td>
+<td>oracle.jdbc.driver.OracleDriver</td>
+<td>
+<p>
+jdbc:oracle:thin:@host:1521:service
+</p>
+
+<p>
+For servers without a service name, use this:
+</p>
+<pre>
+jdbc:oracle:thin:@(DESCRIPTION = 
+                      (ADDRESS_LIST =
+                          (ADDRESS = 
+                              (PROTOCOL = TCP)
+                              (HOST = host)
+                              (PORT = 1521)
+                          )
+                      )
+                      (CONNECT_DATA =
+                          (SID = sid)
+                          (SERVER = DEDICATED)
+                      )
+                  )
+</pre>
+<p>
+Server can be DEDICATED, SHARED, or DEFAULT.  SID is only
+used for old Oracle servers.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>ODBC</td>
+<td>sun.jdbc.odbc.JdbcOdbcDriver</td>
+<td>jdbc:odbc:DSN</td>
+</tr>
+</table>
+
+</body>
+
+</html>

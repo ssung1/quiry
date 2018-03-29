@@ -1,0 +1,356 @@
+a {
+    text-decoration: none;
+}
+
+.x_right {
+    text-align: right;
+}
+
+.x_b {
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.x_top_b {
+    vertical-align: top;
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.x_top {
+    vertical-align: top;
+}
+
+.x_center {
+    text-align: center;
+}
+
+.normal {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+}
+
+.normal_top {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+}
+
+.normal_top_b {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: #a0a0b0;
+}
+
+.normal_topright {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: right;
+}
+
+.normal_topright_b {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: right;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: #a0a0b0;
+}
+
+.normal_topleft {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: left;
+}
+
+.terminal{
+    font-size: 10pt;
+    font-weight: light;
+    background-color: black;
+    color: #00c000;
+}
+
+.mono_topright {
+    font-family: courier new;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: right;
+}
+
+.mono_topright_b {
+    font-family: courier new;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: right;
+    border-style: solid;
+    border-width: 1pt;
+    border-color: steelblue;
+}
+
+.mono_topleft {
+    font-family: courier new;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: left;
+}
+
+.header {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.header_top {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.header_topright {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+    text-align: right;
+}
+
+.header_top_b {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: steelblue;
+}
+
+.header_b3din {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    border-style: inset;
+    border-width: 1pt;
+}
+
+.t3_top {
+    font-family: palatino linotype, serif;
+    font-size: 14pt;
+    font-weight: normal;
+    vertical-align: top;
+}
+
+.t3_top_b {
+    font-family: palatino linotype, serif;
+    font-size: 14pt;
+    font-weight: normal;
+    vertical-align: top;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: steelblue;
+}
+
+.t3_topleft {
+    font-family: palatino linotype, serif;
+    font-size: 14pt;
+    font-weight: normal;
+    text-align: left;
+    vertical-align: top;
+}
+
+.t3_center {
+    font-family: palatino linotype, serif;
+    font-size: 14pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: center;
+}
+
+.t4_topleft {
+    font-family: verdana, serif;
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: left;
+    vertical-align: top;
+}
+
+.memo {
+    font-family: verdana, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+}
+
+.memo_top_b {
+    font-family: verdana, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    vertical-align: top;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.small {
+    font-family: verdana, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+}
+
+.small_topright {
+    font-family: verdana, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: right;
+}
+
+.small_b3din {
+    font-family: verdana, sans-serif;
+    font-size: 8pt;
+    font-weight: normal;
+    border-style: inset;
+    border-width: 1pt;
+}
+
+.version {
+    font-family: verdana, sans-serif;
+    font-size: 7pt;
+    font-weight: normal;
+}
+
+.menu_top {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    background-color: lemonchiffon;
+}
+
+.table_b {
+    width: 100%;
+    border-collapse: collapse;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: steelblue;
+    border-spacing: 0pt;
+}
+
+.table_b1 {
+    width: 100%;
+    border-collapse: collapse;
+
+    border-style: solid;
+    border-width: 2pt 1pt;
+    border-color: steelblue;
+    border-spacing: 0pt;
+}
+
+.table {
+    width: 100%;
+    border-style: none;
+    border-spacing: 0pt;
+    border-collapse: collapse;
+    border-width: 0pt;
+}
+
+
+
+.mainbody {
+    background: white;
+}
+
+.msgsub_topleft {
+    background: #efffff;
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+    text-align: left;
+}
+
+.msgtxt_topleft {
+    font-family: trebuchet ms, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    text-align: left;
+}
+
+.menubar_out {
+    background: #bfdfef;
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+    text-align: right;
+    margin: 0pt 0pt 0pt 0pt;
+    padding: 0pt 0pt 0pt 0pt;
+}
+
+.menubar_in {
+    background: #bfdfef;
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+    text-align: right;
+    border-bottom-style: none;
+    border-left: 2pt solid white;
+    padding: 1pt 1em;
+}
+
+.msgbar_out {
+    background: #dfefff;
+    vertical-align: top;
+    text-align: right;
+    margin: 0pt 0pt 0pt 0pt;
+    padding: 0pt 0pt 0pt 0pt;
+}
+
+.msgbar_in {
+    background: #efffff;
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+    text-align: right;
+    border-bottom-style: none;
+    border-left: 2pt solid white;
+    padding: 1pt 1em;
+}
+
+.button_x_b {
+    background: #bfdfef;
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    border: 2pt outset #8fbfdf;
+    padding: 1pt 1pt;
+}
+
+.body {
+    background: url(../style/lgrey091.gif);
+}

@@ -1,0 +1,108 @@
+<html>
+
+<style>
+.indent {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+</style>
+
+<body>
+
+<h3>Data Types</h3>
+
+<p>
+The data types described below are near compatible and convertible
+by many of the classes found in this package.
+</p>
+<ul>
+
+<li>
+<p>
+List
+</p>
+<p class="indent">
+This is the same List found in java.util.  Its values are ordered
+as key-value pairs:
+</p>
+<pre>
+    key0, value0, key1, value1, key2, value2, ...
+</pre>
+</li>
+
+<li>
+<p>
+Array
+</p>
+<p class="indent">
+The same as list, but as array.
+</p>
+</li>
+
+<li>
+<p>
+Map
+</p>
+<p class="indent">
+This is the "true form" of all the data types -- the keys and values are
+stored as a "Map" or "associative array".
+</p>
+</li>
+
+<li>
+<p>
+net.codepackages.etable.Record
+</p>
+<p class="indent">
+This is very much like a record in a relational database.  Each field
+contains values that can be retrieved by the field name or field
+index.
+</p>
+</li>
+
+<li>
+<p>
+java.sql.ResultSet
+</p>
+<p class="indent">
+This really is a record in a relational database.  However, be very
+careful that the field names returned from a ResultSet are
+unpredictable due to the many flavors of relational database engines
+out in the wild.  The best approach is to retrieve each field by its
+index.  The Lists class does not do that because it does not know the
+order of the fields, so you need to adjust accordingly (see
+net.codepackages.rdb.Rdb.toRtbl for clues).
+</p>
+</li>
+</ul>
+
+<p>
+All values within the data types are stored as Objects where possible.
+</p>
+
+<p>
+This is how data are converted:
+</p>
+<pre>
+
+    Array -------.                     ,--> List
+                 |                     |
+    Map ---------{                     }--> Map
+                 }--> List --> Array --{
+    Record ------{                     `--> Record
+                 |
+    ResultSet ---'
+
+</pre>
+<p>
+See how everything is converted to List first (because List preserves
+order, which is sometimes required, and because List is dynamically
+adjustable in terms of size, which makes it more convenient than
+arrays).  Then the list is converted to array form, which is then
+converted to (nearly) everything else.  Array form is important
+because it is the easiest form in Java for a human to construct.
+</p>
+
+</body>
+
+</html>

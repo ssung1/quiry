@@ -1,0 +1,41 @@
+13th Day of Summer Solstice, 2007
+
+version 1.1
+
+added support for Oracle ref cursors
+
+added version printing option
+
+
+
+12th Day of Summer Solstice, 2007
+
+version 1.0.4
+
+now prints null values as empty string
+
+
+
+Day of Summer Solstice, 2007
+
+version 1.0.3
+
+now prints error messages through stderr
+
+
+
+10th Day of Heavy Snow, 2005
+
+version 1.0.2
+
+removed error message when style is not specified; using default is okay
+
+
+
+11th Day of Grain-Sprouting Rain, 2005
+
+version 1.0.1
+
+removed error message from output file
+
+added -q option listing to help screen

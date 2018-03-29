@@ -1,0 +1,121 @@
+a {
+    text-decoration: none;
+}
+
+.header {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.header_top {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    vertical-align: top;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.cell {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.cell_top {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.cell_right {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    text-align: right;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.cell_clear {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+
+    padding: 1pt;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.cell_menu {
+    font-family: verdana, sans-serif;
+    font-size: 10pt;
+    font-weight: normal;
+    vertical-align: top;
+    background-color: lemonchiffon;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: hotpink;
+}
+
+.table_full {
+    width: 100%;
+    border-collapse: collapse;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: steelblue;
+    border-spacing: 0pt;
+}
+
+.table_clear {
+    width: 100%;
+    border-collapse: collapse;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: steelblue;
+    border-spacing: 0pt;
+}
+
+.table_menu {
+    width: 100%;
+    border-collapse: collapse;
+
+    border-style: solid;
+    border-width: 1pt;
+    border-color: steelblue;
+    border-spacing: 0pt;
+}
+
+.title {
+    font-family: "palatino linotype", "book antiqua"
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+.memo {
+    font-family: verdana;
+    font-size: 8pt;
+    font-weight: normal;
+}
+

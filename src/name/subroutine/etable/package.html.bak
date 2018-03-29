@@ -1,0 +1,51 @@
+<html>
+<body>
+<p>
+This package is used to access data of the "table" type.  A table
+is organized into records.  Each record includes one or more fields:
+</p>
+
+<pre>
+
+          Field 1    Field 2    Field 3      Field 4 ....
+Record 1  111        222        333          444
+Record 2  111        222        333          444
+Record 3  111        222        333          444
+...
+
+</pre>
+
+<p>
+The fields do not have to be of the same type.  The records must
+consist of the same fields, in the same order.
+</p>
+
+<p>
+There are currently many types of formats that follow the "table"
+standard: SDF (fixed length), DBF (database format used by dBASE
+family of software), and CSV (comma delimited).
+</p>
+
+<p>
+The classes in the package include fields, records, and tables.  All
+fields inherit the interface Field:
+
+<pre>
+    Field                               interface
+        AbstractField                   base class that implements Field
+        ByteField                       field with byte boundaries
+            EtableField                 Etable field
+            DBFField                    ...
+            CSVField
+	    SDFField
+        ...
+    Record
+        ...
+    Table
+        ...
+</pre>
+
+</p>
+
+</body>
+</html>
