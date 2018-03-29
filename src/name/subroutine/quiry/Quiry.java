@@ -6,6 +6,7 @@ import java.util.*;
 import java.text.*;
 import java.sql.*;
 
+import oracle.jdbc.OracleTypes;
 import org.mozilla.javascript.*;
 
 import name.subroutine.util.Variant;
@@ -57,7 +58,7 @@ public class Quiry
             CallableStatement stmt = _conn.prepareCall( sql );
 
             stmt.registerOutParameter( 1,
-                oracle.jdbc.driver.OracleTypes.CURSOR );
+                OracleTypes.CURSOR );
             stmt.execute();
 
             return (ResultSet)stmt.getObject( 1 );
