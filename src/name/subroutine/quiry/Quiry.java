@@ -361,6 +361,7 @@ public class Quiry
         System.out.println( "-r              result is an Oracle ref cursor" );
         System.out.println( "-v              prints version" );
         System.out.println( "-dls            shows all database aliases" );
+        System.out.println( "-C <config>     specifies config file" );
     }
 
     static void showDatabase( String id, Scriptable db )
@@ -442,6 +443,7 @@ public class Quiry
         final int STYLE                                     = 12;
         final int QUIRY                                     = 13;
         final int OUTPUT                                    = 14;
+        final int CONFIG                                    = 15;
 
         // parse command line options
         int context = INIT;
@@ -484,6 +486,9 @@ public class Quiry
                     System.out.println( Resource.version() );
                     return;
                 }
+                else if( "-C".equals( argv[i] ) ){
+                    context = CONFIG;
+                }
                 else{
                     sql = argv[i];
                 }
@@ -521,6 +526,10 @@ public class Quiry
             }
             else if( context == OUTPUT ){
                 output = argv[i];
+                context = INIT;
+            }
+            else if( context == CONFIG ){
+                Resource._config_file = argv[i];
                 context = INIT;
             }
         }

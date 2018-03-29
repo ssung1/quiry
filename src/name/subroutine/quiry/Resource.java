@@ -23,17 +23,24 @@ public class Resource
     static FileWriter _log_file;
     static PrintWriter _log_out;
 
+    public static String _config_file;
+
     public static String version()
     {
-        return "Quick Query   version 1.1" +
-               "   Summer Solstice, 2007";
+        return "Quick Query   version 1.2" +
+               "   2018-03-29";
     }
 
     public static File getInitScript()
     {
-        URL url = Resource.class.getClassLoader().
-                  getResource( "conf/system.js" );
-        return new File( url.getFile() );
+        if( _config_file != null ){
+            return new File( _config_file );
+        }
+        else{
+            URL url = Resource.class.getClassLoader().
+                getResource( "conf/system.js" );
+            return new File( url.getFile() );
+        }
     }
 
     public static Scriptable getWorld()

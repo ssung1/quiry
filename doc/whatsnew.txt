@@ -1,3 +1,12 @@
+2018-03-29
+
+We no longer have the season calendar :(
+
+We no longer keep config file as part of the source.  To use the application,
+it is better to specify the config file location.
+
+
+
 13th Day of Summer Solstice, 2007
 
 version 1.1

@@ -30,6 +30,7 @@ else
     javafile="src/name/subroutine/quiry/Resource.java"
 fi
 
+if [ ! -x WEB-INF/classes ]; then
+    mkdir WEB-INF/classes
+fi
 javac -deprecation -d WEB-INF/classes $javafile
-
-cp -rp src/conf WEB-INF/classes
