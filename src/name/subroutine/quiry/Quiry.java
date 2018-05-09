@@ -249,10 +249,10 @@ public class Quiry
             int type = md.getColumnType( i );
             String typeName = "(unknown)";
             String temporal = null;
-            if( type == Types.INTEGER ){
+            if( type == Types.INTEGER || type == Types.SMALLINT ){
                 typeName = "Integer";
             }
-            else if( type == Types.NUMERIC ){
+            else if( type == Types.NUMERIC || type == Types.DECIMAL ){
                 if( md.getScale( i ) > 0 ){
                     typeName = "BigDecimal";
                 }
@@ -290,7 +290,7 @@ public class Quiry
                 typeName = "String";
             }
             else{
-                typeName = md.getColumnTypeName( i );
+                typeName = md.getColumnTypeName( i ) + String.valueOf( type );
             }
             if( temporal != null ){
                 out.println( temporal );
