@@ -257,13 +257,13 @@ public class Quiry
                     typeName = "BigDecimal";
                 }
                 else{
-                    if( md.getPrecision( i ) > 18 ){
+                    if( md.getPrecision( i ) > 19 ){
                         typeName = "BigInteger";
                     }
-                    else if( md.getPrecision( i ) > 9 ){
+                    else if( md.getPrecision( i ) > 11 ){
                         typeName = "Long";
                     }
-                    else if( md.getPrecision( i ) > 4 ){
+                    else if( md.getPrecision( i ) > 5 ){
                         typeName = "Integer";
                     }
                     else{
