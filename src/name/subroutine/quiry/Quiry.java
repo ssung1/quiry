@@ -266,8 +266,11 @@ public class Quiry
                     else if( md.getPrecision( i ) > 5 ){
                         typeName = "Integer";
                     }
-                    else{
+                    else if( md.getPrecision( i ) > 0 ){
                         typeName = "Short";
+                    }
+                    else{
+                        typeName = "Integer";
                     }
                 }
             }
