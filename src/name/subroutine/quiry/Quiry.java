@@ -234,7 +234,7 @@ public class Quiry
         return sb.toString();
     }
 
-    void runMetaDataQuiryJpa( String sql, PrintStream out )
+    void runMetaDataQuiryJpa( String sql, PrintStream out, boolean columnName )
         throws ClassNotFoundException, SQLException
     {
         ResultSet rs = execute( sql );
@@ -245,7 +245,8 @@ public class Quiry
 
         for( int i = 1; i <= cnt; ++i ){
             String[] s;
-            String name = toJavaName( md.getColumnName( i ).toLowerCase() );
+            String origName = md.getColumnName( i );
+            String name = toJavaName( origName.toLowerCase() );
             int type = md.getColumnType( i );
             String typeName = "(unknown)";
             String temporal = null;
@@ -299,7 +300,14 @@ public class Quiry
                 out.println( temporal );
             }
             if( md.isNullable( i ) == ResultSetMetaData.columnNoNulls ){
-                out.println( "@Column(nullable = false)" );
+                if( columnName ){
+                    out.print( "@Column(name = \"" );
+                    out.print( origName );
+                    out.println( "\", nullable = false)" );
+                }
+                else {
+                    out.println( "@Column(nullable = false)" );
+                }
             }
             out.print( "private " );
             out.print( typeName );
@@ -458,6 +466,7 @@ public class Quiry
         System.out.println( "-o <output>     specifies output file" );
         System.out.println( "-t              prints structure only" );
         System.out.println( "-jpa            prints structure in JPA style");
+        System.out.println( "-n              JPA: include column name");
         System.out.println( "-r              result is an Oracle ref cursor" );
         System.out.println( "-v              prints version" );
         System.out.println( "-dls            shows all database aliases" );
@@ -556,6 +565,7 @@ public class Quiry
         boolean jpa = false;
         boolean is_ref_cur = false;
         boolean quiet = false;
+        boolean columnName = false;
         for( int i = 0; i < argv.length; ++i ){
             if( context == INIT ){
                 if( "-d".equals( argv[i] ) ){
@@ -593,6 +603,9 @@ public class Quiry
                 else if( "-jpa".equals( argv[i] ) ){
                     struct = true;
                     jpa = true;
+                }
+                else if( "-n".equals( argv[i] ) ){
+                    columnName = true;
                 }
                 else{
                     sql = argv[i];
@@ -687,7 +700,7 @@ public class Quiry
                     q.runMetaDataQuiryCsv( sql, out );
                 }
                 else if( jpa ){
-                    q.runMetaDataQuiryJpa( sql, out );
+                    q.runMetaDataQuiryJpa( sql, out, columnName );
                 }
                 else{
                     if( style == null ){

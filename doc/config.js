@@ -13,7 +13,7 @@ function Db( driver, url, user, password )
     this.password = password
 }
 
-driver_mysql = "com.mysql.jdbc.Driver"
+driver_mysql = "com.mysql.cj.jdbc.Driver"
 driver_oracle = "oracle.jdbc.driver.OracleDriver"
 driver_informix = "com.informix.jdbc.IfxDriver"
 driver_sybase = "com.sybase.jdbc3.jdbc.SybDriver"
